@@ -9,12 +9,18 @@ class ViewTransaction extends React.Component {
       data
     };
   }
-
+  updateTransactions = () => {};
   render() {
+    const bottomRightStyle = {
+      position: "fixed",
+      right: "3%",
+      bottom: "3%",
+      borderRadius: "100%"
+    };
     return (
       <div className="container">
         <h1 className="title" style={{ marginBottom: "3%" }}>
-          <b>Your Transactions</b>
+          <b>Transactions</b>
         </h1>
         <div className="columns is-multiline">
           {this.state.data.actual_chain[1].transactions.map((transaction) => (
@@ -30,6 +36,15 @@ class ViewTransaction extends React.Component {
           <TransactionCard sender="Mahesh" receiver="Suresh" amount="200" />
           <TransactionCard sender="Mahesh" receiver="Suresh" amount="200" />
         </div>
+        <button
+          class="button is-primary is-large"
+          style={bottomRightStyle}
+          onClick={this.updateTransactions}
+        >
+          <span class="icon">
+            <i class="fas fa-sync"></i>
+          </span>
+        </button>
       </div>
     );
   }

@@ -28,13 +28,19 @@ class Nav extends React.Component {
           </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
+        <div id="navbarBasicExample" className="navbar-menu">
+          <div className="navbar-start">
             <Link to="/view_transactions" className="navbar-item">
               View Transactions
             </Link>
-            <Link to="/make_transaction" className="navbar-item">
+            <Link to="/make_transactions" className="navbar-item">
               Make Transaction
+            </Link>
+            <Link to="/mine_transaction" className="navbar-item">
+              Mine
+            </Link>
+            <Link to="/connect_node" className="navbar-item">
+              Connect
             </Link>
 
             {/* <div class="navbar-item has-dropdown is-hoverable">
@@ -53,9 +59,9 @@ class Nav extends React.Component {
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
+                <Link class="button is-primary" to="/add_user">
+                  <strong>Add User</strong>
+                </Link>
                 <a class="button is-light">Log in</a>
               </div>
             </div>
