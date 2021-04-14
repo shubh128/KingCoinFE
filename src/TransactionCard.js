@@ -15,7 +15,7 @@ class TransactionCard extends React.Component {
           </div>
           <footer class="card-footer">
             <p class="card-footer-item">
-              <span style={{ wordBreak: "break-all" }}>
+              <span>
                 {/* View on{" "}
                 <a href="https://twitter.com/codinghorror/status/506010907021828096">
                   Twitter
@@ -24,7 +24,7 @@ class TransactionCard extends React.Component {
                   <b>Sender</b>
                 </span>
                 <br />
-                {this.props.sender}
+                <abbr title={this.props.sender}>{this.props.sender.slice(0,10)}</abbr>
               </span>
             </p>
             <p class="card-footer-item">
@@ -34,7 +34,7 @@ class TransactionCard extends React.Component {
                   <b>Receiver</b>
                 </span>
                 <br />
-                {this.props.receiver}
+                <abbr title={this.props.receiver}>{this.props.receiver.slice(0,10)}</abbr>
               </span>
             </p>
           </footer>

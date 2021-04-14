@@ -1,5 +1,6 @@
 import React from "react";
-
+import axios from "axios";
+import serverUrl from './constants'
 function UserKeys(props) {
   return (
     <div class="card container" style={{ marginTop: "5%" }}>
@@ -27,10 +28,9 @@ class AddUser extends React.Component {
     this.state = {
       username: "",
       userPublicKey:
-        "30819f300d06092a864886f70d010101050003818d0030818902818100d4d1f43628292cef0fac1b0785024b4c10ce95e83971d45e7852497b3c5e5bbf45fe5285bc0f5111cf4dea6d7eb8bc78a7b24fa8dd5f01e635343e4451d0caf1126305bc65b7012ddabefb5920cf660db501132859dd366d3efc5c4151cce3d8ad30ae0bbea43a1a9799081026dee2f7b9926448b66d744bf765689d49ccbda90203010001",
+        "",
       userPrivateKey:
-        "30819f300d06092a864886f70d010101050003818d0030818902818100d4d1f43628292cef0fac1b0785024b4c10ce95e83971d45e7852497b3c5e5bbf45fe5285bc0f5111cf4dea6d7eb8bc78a7b24fa8dd5f01e635343e4451d0caf1126305bc65b7012ddabefb5920cf660db501132859dd366d3efc5c4151cce3d8ad30ae0bbea43a1a9799081026dee2f7b9926448b66d744bf765689d49ccbda90203010001" +
-        "30819f300d06092a864886f70d010101050003818d0030818902818100d4d1f43628292cef0fac1b0785024b4c10ce95e83971d45e7852497b3c5e5bbf45fe5285bc0f5111cf4dea6d7eb8bc78a7b24fa8dd5f01e635343e4451d0caf1126305bc65b7012ddabefb5920cf660db501132859dd366d3efc5c4151cce3d8ad30ae0bbea43a1a9799081026dee2f7b9926448b66d744bf765689d49ccbda90203010001",
+        "",
       fetched: false,
       isDisabled: true
     };
@@ -50,7 +50,15 @@ class AddUser extends React.Component {
   fetchUserDetails = (e) => {
     //api call
     e.preventDefault();
-    this.setState({ fetched: true });
+    const data = {
+      name : this.state.username
+    }
+    JSON.stringify(data);
+    axios.post(`${serverUrl}/api/add_user`, data).then((response) => {
+      this.setState({userPublicKey: response.data.client_pub_key,
+                      userPrivateKey: response.data.client_pvt_key,
+                    fetched: true})
+    });
   };
   render() {
     return (

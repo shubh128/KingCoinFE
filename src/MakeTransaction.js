@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import serverUrl from "./constants";
 
 class MakeTransaction extends React.Component {
   constructor(props) {
@@ -7,7 +9,8 @@ class MakeTransaction extends React.Component {
       senderPublicKey: "",
       senderPrivateKey: "",
       receiverPublicKey: "",
-      amount: 0
+      amount: 0,
+      transactionSuccess: 0
     };
   }
   handleChange = (e) => {
@@ -17,10 +20,50 @@ class MakeTransaction extends React.Component {
 
   makeTransaction = (e) => {
     //make api call and all that
+    const transaction = {
+      sender_pub: this.state.senderPublicKey,
+      sender_pvt: this.state.senderPrivateKey,
+      receiver: this.state.receiverPublicKey,
+      amount: this.state.amount,
+    };
+    JSON.stringify(transaction);
+    axios
+      .post(`${serverUrl}api/add_transaction`, transaction)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status == "failed") {
+          this.setState({transactionSuccess: 1});
+        } else if (response.data.status == "success") {
+          this.setState({transactionSuccess: 2});
+        }
+      });
   };
 
-  render() {
+  render() {  
     return (
+      <div>
+        {(this.state.transactionSuccess==2) && (
+          <article class="message is-primary" style={{marginLeft: "30%", marginRight: "30%"}}>
+          <div class="message-header">
+            <p>Message</p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            Transaction Successful!
+          </div>
+        </article>
+        )}
+        {(this.state.transactionSuccess==1) && (
+          <article class="message is-danger" style={{marginLeft: "30%", marginRight: "30%"}}>
+          <div class="message-header">
+            <p>Message</p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            Signature Verification Failed!
+          </div>
+        </article>
+      )}
       <form class="box" style={{ margin: "5% 25% 15% 25%" }}>
         <div class="field">
           <label class="label">Sender Public Key</label>
@@ -84,6 +127,7 @@ class MakeTransaction extends React.Component {
           </p>
         </div>
       </form>
+      </div>
     );
   }
 }

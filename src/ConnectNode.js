@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import serverUrl from './constants'
 
 class ConnectNode extends React.Component {
   constructor(props) {
@@ -14,8 +16,15 @@ class ConnectNode extends React.Component {
   };
 
   connectNode = (e) => {
-    this.setState({
-      connectedNodes: [...this.state.connectedNodes, this.state.nodeUrl]
+    const connect_node = {
+      nodes : [this.state.nodeUrl]
+    }
+    JSON.stringify(connect_node)
+    axios.post(`${serverUrl}/api/connect_node`, connect_node).then((response)=>{
+      this.setState({
+        connectedNodes: response.data.total_nodes
+      });
+      console.log(response.data);
     });
   };
   render() {
